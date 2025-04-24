@@ -2,6 +2,7 @@
 set -e
 
 echo "🔧 Clonando CuraEngine con submódulos..."
+rm -rf CuraEngine
 git clone --recurse-submodules https://github.com/Ultimaker/CuraEngine.git
 
 cd CuraEngine
