@@ -2,7 +2,7 @@ services:
   - type: web
     name: ulmform
     env: python
-    buildCommand: ./build_cura.sh
+    buildCommand: bash build_cura.sh
     startCommand: gunicorn app:app
     plan: free
     envVars:
