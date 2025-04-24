@@ -1,22 +1,13 @@
 #!/bin/bash
 set -e
 
-echo "🔧 Clonando CuraEngine con submódulos..."
-rm -rf CuraEngine
-git clone --recurse-submodules https://github.com/Ultimaker/CuraEngine.git
+echo "📥 Descargando CuraEngine precompilado versión 5.4.0..."
+mkdir -p ./bin
 
-cd CuraEngine
+# Descarga el binario de CuraEngine para Linux desde el repositorio oficial
+curl -L -o ./bin/CuraEngine https://github.com/Ultimaker/CuraEngine/releases/download/5.4.0/CuraEngine-linux
 
-echo "🛠️ Compilando CuraEngine..."
-mkdir -p build
-cd build
-cmake ..
-make
+# Da permisos de ejecución
+chmod +x ./bin/CuraEngine
 
-cd ../..
-
-echo "📦 Copiando ejecutable a ./bin/"
-mkdir -p bin
-cp CuraEngine/build/CuraEngine bin/
-
-echo "✅ CuraEngine compilado y copiado exitosamente."
+echo "✅ CuraEngine descargado y listo para usar."
