@@ -3,7 +3,7 @@
 # Instalar dependencias necesarias
 apt-get update && apt-get install -y cmake git build-essential
 
-# Clonar CuraEngine desde GitHub
+# Clonar CuraEngine
 git clone https://github.com/Ultimaker/CuraEngine.git
 cd CuraEngine
 
@@ -11,6 +11,6 @@ cd CuraEngine
 cmake .
 make
 
-# Crear carpeta bin y mover el ejecutable
+# Crear carpeta bin si no existe y copiar
 mkdir -p ../bin
 cp CuraEngine ../bin/CuraEngine
