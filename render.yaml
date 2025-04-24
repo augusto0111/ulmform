@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: ulmform
+    env: python
+    plan: free
+    buildCommand: |
+      sudo apt-get update
+      sudo apt-get install -y cmake g++ git
+      git clone https://github.com/Ultimaker/CuraEngine.git
+      cd CuraEngine
+      cmake .
+      make
+    startCommand: gunicorn app:app
