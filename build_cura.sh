@@ -1,27 +1,25 @@
 #!/bin/bash
+set -e  # Detener script si ocurre cualquier error
 
-echo "🧪 INICIANDO SCRIPT build_cura.sh"
-
-# 🧱 Instalar dependencias necesarias
+echo "🔧 Instalando dependencias..."
 apt-get update && apt-get install -y cmake git build-essential
 
-# 📦 Clonar y compilar CuraEngine
+echo "📦 Clonando CuraEngine..."
 git clone https://github.com/Ultimaker/CuraEngine.git
-cd CuraEngine || exit 1
 
+cd CuraEngine
+echo "⚙️ Compilando CuraEngine..."
 cmake .
-make || { echo "❌ Error en make, CuraEngine no se compiló"; exit 1; }
+make
 
-# 📂 Mostrar si el binario se creó correctamente
-echo "📂 Contenido de carpeta CuraEngine:"
+echo "📂 Listando contenido compilado:"
 ls -la
 
-# 📁 Crear la carpeta bin si no existe
+echo "📁 Creando carpeta bin en la raíz del proyecto..."
 mkdir -p ../bin
 
-# 📤 Copiar el binario a la carpeta bin
-cp CuraEngine ../bin/CuraEngine || { echo "❌ Error al copiar CuraEngine"; exit 1; }
+echo "📤 Moviendo CuraEngine compilado a ./bin/"
+cp CuraEngine ../bin/CuraEngine
 
-# 🔍 Verificar si el binario se copió
-echo "📦 Contenido de ./bin:"
+echo "📁 Verificando contenido de ./bin/"
 ls -la ../bin
