@@ -114,15 +114,15 @@ def subir_archivo():
         output_gcode = os.path.join(UPLOAD_FOLDER, filename.replace(".stl", ".gcode"))
 
         comando = [
-            "C:\\Slic3r\\Slic3r-1.3.0.64bit\\slic3r-console.exe",
-            ruta_stl,
-            "--fill-density", f"{infill}%",
-            "--support-material",
-            "--perimeters", "3",
-            "--filament-diameter", "1.75",
-            "--nozzle-diameter", "0.4",
-            "--layer-height", "0.2",
-            "--output", output_gcode
+            "./CuraEngine/CuraEngine",
+            "slice",
+            "-l", ruta_stl,
+            "-s", f"infill_sparse_density={infill}",
+            "-s", "layer_height=0.2",
+            "-s", "support_enable=true",
+            "-s", "material_diameter=1.75",
+            "-s", "machine_nozzle_size=0.4",
+            "-o", output_gcode
         ]
 
         salida = subprocess.check_output(comando, stderr=subprocess.STDOUT, text=True)
