@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Empresa 3D</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<body>
+    <header>
+        <div>
+            <a href="/" style=" text-decoration: none;">
+                <img src="{{ url_for('static', filename='img/ulmform2.svg') }}" alt="Logo Ulmform" style="height: 40px;">
+            </a>
+        </div>
+        <nav class="navbar">
+            <ul style="display: flex; gap: 1.5rem; list-style: none; margin: 0; padding: 0;align-items: center;">
+                <li><a href="/" style="color: white; text-decoration: none;">Inicio</a></li>
+
+                {% if session.usuario %}
+                    <li><a href="/historial">Mi Historial</a></li>
+                    <li><a href="/carrito" class="nav-carrito">Carrito</a></li>
+                    <li><a href="/logout">Salir</a></li>
+
+                {% else %}
+                    <li><a href="/login" style="color: white; text-decoration: none;">Login</a></li>
+                    <li><a href="/registro" style="color: white; text-decoration: none;">Registro</a></li>
+                    {# Login Empresa estará oculto del header principal #}
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container" style="max-width: 1400px; margin-right: auto; margin-top: 80px; padding: 1rem;margin-left: auto;">
+        {% block contenido %}{% endblock %}
+    </div>
+
+    <!-- Toast flotante -->
+    <div id="toast" class="toast"></div>
+<footer>
+    &copy; {{ current_year }} Plataforma de Cotización 3D
+</footer>
+</body>
+</html>

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}🛒 Mi Carrito{% endblock %}
+
+{% block contenido %}
+<section class="formulario-box" style="max-width: 1000px; margin: auto;">
+    <h2>🛒 Carrito de Compras</h2>
+
+    {% if carrito %}
+        <div class="tabla-pedidos">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Archivo</th>
+                        <th>Material</th>
+                        <th>Cantidad</th>
+                        <th>Relleno</th>
+                        <th>Peso</th>
+                        <th>Precio</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% set ns = namespace(total=0) %}
+                    {% for item in carrito %}
+                        {% set ns.total = ns.total + (item.total | float) %}
+
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ item.archivo }}</td>
+                            <td>{{ item.material }}</td>
+                            <td>{{ item.cantidad }}</td>
+                            <td>{{ item.infill }}%</td>
+                            <td>{{ item.gramos }} g</td>
+                            <td>$ {{ item.total | float }}</td>
+
+                            <td>
+                                <form method="POST" action="/eliminar_carrito/{{ loop.index0 }}">
+                                    <button onclick="eliminarItem({{ loop.index0 }})" class="btn-secundario">❌ Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="resumen-final">
+
+            <p><strong>Total del carrito:</strong> ${{ ns.total }}</p>
+
+            <button id="btnConfirmarCarrito" class="btn-principal">Confirmar todo</button>
+
+
+        </div>
+
+    {% else %}
+        <p>No hay productos en tu carrito.</p>
+    {% endif %}
+    <script>
+        document.getElementById("btnConfirmarCarrito").addEventListener("click", async () => {
+            const res = await fetch("/confirmar_carrito", { method: "POST" });
+            const json = await res.json();
+            alert(json.mensaje || json.error);
+            if (json.mensaje) {
+                setTimeout(() => location.href = "/historial", 1000);
+            }
+        });
+    </script>
+
+</section>
+<script>
+function eliminarItem(indice) {
+    fetch("/eliminar_carrito", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ indice })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.mensaje || data.error);
+        if (data.mensaje) location.reload();
+    });
+}
+
+</script>
+
+
+{% endblock %}

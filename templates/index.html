@@ -1,0 +1,93 @@
+
+{% extends "base.html" %}
+{% block contenido %}
+
+<section style="display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to right, #f0f4ff, #e6e9ff); padding: 3rem; border-radius: 12px; margin-top: 2rem; margin-bottom: 2rem;">
+    <div style="flex: 1; padding-right: 2rem;">
+        <h1 style="font-size: 2.5rem; font-weight: 700; color: #1a1a1a;">Servicio de Impresión 3D Online</h1>
+        <p style="font-size: 1.1rem; color: #333; margin-top: 1rem;">
+            Suba sus modelos 3D, seleccione sus parámetros y obtenga una cotización automática. Ideal para empresas, emprendedores y creadores. ¡Ahorre tiempo y dinero!
+        </p>
+        <ul style="margin-top: 1.5rem; color: #555; list-style-type: none; padding: 0;">
+            <li>✔️ Entrega en tiempo récord</li>
+            <li>✔️ Múltiples materiales disponibles</li>
+            <li>✔️ Cotización automática y transparente</li>
+        </ul>
+    </div>
+    <div style="flex: 1; text-align: right;">
+        <img src="{{ url_for('static', filename='img/pieza3d.png') }}" alt="pieza 3D" style="max-width: 100%; height: auto;">
+    </div>
+</section>
+
+<main class="cotizacion-layout">
+  <section class="formulario-box">
+    <h3>Configurar Pedido</h3>
+    <form id="form-cotizacion">
+        <div class="input-group full-width">
+            <label for="archivo">📁 Archivo STL:</label>
+            <input type="file" name="archivo" id="archivo" style="background-color: #f5f7fb" accept=".stl" required>
+        </div>
+
+        <div class="input-group">
+            <label>Tecnología:</label>
+            <div class="botones-grid">
+                <label class="toggle-btn">
+                    <input type="radio" name="tecnologia" value="FDM" checked>
+                    <span>FDM</span>
+                </label>
+                <label class="toggle-btn">
+                    <input type="radio" name="tecnologia" value="SLA">
+                    <span>SLA</span>
+                </label>
+                <label class="toggle-btn">
+                    <input type="radio" name="tecnologia" value="SLS">
+                    <span>SLS</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Material:</label>
+            <div class="botones-grid">
+                {% for mat in materiales %}
+                <label class="toggle-btn">
+                    <input type="radio" name="material" value="{{ mat }}" {% if loop.first %}checked{% endif %}>
+                    <span>{{ mat }}</span>
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="infill">Relleno (%):</label>
+            <input type="number" name="infill" id="infill" min="0" max="100" value="20" required>
+        </div>
+
+        <div class="input-group">
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" name="cantidad" id="cantidad" min="1" value="1" required>
+        </div>
+
+        <div class="input-group full-width">
+            <button type="submit" class="btn-principal">📐 Cotizar</button>
+        </div>
+    </form>
+  </section>
+
+  <aside class="resumen-cotizacion">
+      <h3>Resumen de Cotización</h3>
+      <div id="resultado"></div>
+
+      <div id="stl-viewer" class="viewer-container" style="display: none; margin-top: 1.5rem;">
+          <h4>Vista previa del archivo</h4>
+          <div id="visor3d" style="width: 100%; aspect-ratio: 4 / 3; max-width: 100%; background: #333; border: 1px solid #ccc; position: relative;"></div>
+      </div>
+  </aside>
+</main>
+
+<!-- Scripts visor 3D -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/loaders/STLLoader.js"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+{% endblock %}

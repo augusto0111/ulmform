@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<section class="formulario-box">
+    <h2>Login Administrador</h2>
+    <form method="POST">
+        <div class="input-group full-width">
+            <label for="nombre">Nombre de administrador:</label>
+            <input type="text" name="nombre" required>
+        </div>
+
+        <div class="input-group full-width">
+            <label for="password">Contraseña:</label>
+            <input type="password" name="password" required>
+        </div>
+
+        <div class="input-group full-width">
+            <button type="submit" class="btn-principal">Ingresar</button>
+        </div>
+    </form>
+
+    {% if error %}
+        <p style="color: red;">❌ {{ error }}</p>
+    {% endif %}
+</section>
+{% endblock %}

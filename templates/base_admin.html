@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Panel Administrador{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        header {
+            background: #111;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        header nav a {
+            color: white;
+            margin-left: 1.5rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: #f0f0f0;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Panel de Administración</h1>
+    <nav>
+        <a href="/admin/revisar_pedidos">Revisar Pedidos</a>
+        <a href="/produccion">Pedidos en produccion</a>
+        <a href="/admin/precios">Precios</a>
+        <a href="/logout">Cerrar sesión</a>
+    </nav>
+</header>
+
+<main>
+    {% block contenido %}{% endblock %}
+</main>
+
+<footer>
+    &copy; {{ current_year }} Plataforma de Cotización 3D - Admin
+</footer>
+
+</body>
+</html>

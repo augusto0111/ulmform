@@ -1,0 +1,46 @@
+{% extends "base_admin.html" %}
+
+{% block title %}🏭 Producción - Pedidos Pagados{% endblock %}
+
+{% block contenido %}
+<section class="formulario-box" style="max-width: 1400px; margin: auto;margin-top: 80px">
+    <h2>🏭 Pedidos para Producción</h2>
+
+    {% if pedidos %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Cliente</th>
+                    <th>Archivo</th>
+                    <th>Material</th>
+                    <th>Infill</th>
+                    <th>Cantidad</th>
+                    <th>Peso</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in pedidos %}
+                <tr>
+                    <td>{{ p[1] }}</td>
+                    <td>{{ p[2] }}</td>
+                    <td>{{ p[3] }}</td>
+                    <td>{{ p[4] }}</td>
+                    <td>{{ p[5] }}%</td>
+                    <td>{{ p[6] }}</td>
+                    <td>{{ p[7] }} g</td>
+                    <td>
+                        <form method="POST" action="/marcar_entregado/{{ p[0] }}">
+                            <button type="submit" class="btn-principal">📦 Marcar como entregado</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay pedidos pagados pendientes de producción.</p>
+    {% endif %}
+</section>
+{% endblock %}

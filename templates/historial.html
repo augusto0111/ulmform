@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}📜 Historial de Pedidos{% endblock %}
+
+{% block contenido %}
+<section class="formulario-box" style="max-width: 1400px; margin: auto;">
+    <h2>📜 Historial de Pedidos</h2>
+
+    {% if pedidos %}
+        <div class="tabla-pedidos">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Archivo</th>
+                        <th>Material</th>
+                        <th>Relleno</th>
+                        <th>Cantidad</th>
+                        <th>Peso</th>
+                        <th>Precio</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in pedidos %}
+                    <tr>
+                        <td>{{ p[11] }}</td> {# fecha #}
+                        <td>{{ p[2] }}</td> {# archivo #}
+                        <td>{{ p[4] }}</td> {# material #}
+                        <td>{{ p[5] }}%</td> {# infill #}
+                        <td>{{ p[6] }}</td> {# cantidad #}
+                        <td>{{ p[7] }} g</td> {# gramos #}
+                        <td>$ {{ p[10] }}</td> {# total #}
+                        <td>
+                            {% if p[12] %}
+                                {{ p[12]|capitalize }}
+                            {% else %}
+                                Pendiente
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if p[12] == 'aprobado' and p[13] %}
+                                <form method="POST" action="/crear_pago/{{ p[0] }}">
+                                    <button class="btn-principal" type="submit">💳 Pagar ahora</button>
+                                </form>
+                            {% elif p[12] == 'rechazado' and p[13] %}
+                                <p style="color: red;">❌ {{ p[13] }}</p>
+                            {% elif p[13] %}
+                                <p>{{ p[13] }}</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>No se encontraron pedidos realizados aún.</p>
+    {% endif %}
+</section>
+{% endblock %}
