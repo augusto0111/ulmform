@@ -125,6 +125,9 @@ def subir_archivo():
             "-o", output_gcode
         ]
 
+        print("🧪 Verificando existencia de CuraEngine en ./")
+        print("Archivos en directorio actual:", os.listdir("."))
+
         salida = subprocess.check_output(comando, stderr=subprocess.STDOUT, text=True)
         print("✅ Slicer ejecutado correctamente:")
         print(salida)
