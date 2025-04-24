@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "🧪 INICIANDO SCRIPT build_cura.sh"
+
 # 🧱 Instalar dependencias necesarias
 apt-get update && apt-get install -y cmake git build-essential
 
