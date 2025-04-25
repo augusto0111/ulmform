@@ -114,7 +114,7 @@ def subir_archivo():
         output_gcode = os.path.join(UPLOAD_FOLDER, filename.replace(".stl", ".gcode"))
 
         comando = [
-            "./tmp/CuraEngine",
+            "/tmp/CuraEngine",
             "slice",
             "-l", ruta_stl,
             "-s", f"infill_sparse_density={infill}",
