@@ -2,6 +2,7 @@
 
 echo "📦 Instalando dependencias..."
 pip install --upgrade pip
+pip install -r requirements.txt
 pip install gunicorn
 
 echo "📥 Descargando CuraEngine precompilado versión 5.4.0..."
