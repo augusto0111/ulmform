@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "🧹 Limpiando residuos anteriores (si existen)..."
+rm -rf CuraEngine  # Si por error se creó como carpeta o submódulo
+
 echo "📦 Instalando dependencias..."
 pip install --upgrade pip
 pip install -r requirements.txt
