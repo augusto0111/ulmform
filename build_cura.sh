@@ -1,20 +1,21 @@
 #!/bin/bash
 
-echo "🧹 Limpiando residuos anteriores (si existen)..."
-rm -f ./bin/CuraEngine
+echo "🧹 Limpiando residuos anteriores..."
+rm -rf CuraEngine build || true
 
-echo "📦 Instalando dependencias..."
-pip install --upgrade pip
-pip install -r requirements.txt
-pip install gunicorn
+echo "📥 Clonando CuraEngine desde GitHub (versión 5.4.0)..."
+git clone --branch 5.4.0 https://github.com/Ultimaker/CuraEngine.git
 
-echo "📁 Creando carpeta ./bin si no existe..."
-mkdir -p ./bin
+echo "🛠️ Compilando CuraEngine con CMake..."
+apt-get update && apt-get install -y cmake g++ make
 
-echo "📥 Descargando CuraEngine precompilado versión 5.4.0..."
-curl -L -o ./bin/CuraEngine https://github.com/Ultimaker/CuraEngine/releases/download/5.4.0/CuraEngine-linux-x64
+mkdir -p CuraEngine/build
+cd CuraEngine/build
+cmake ..
+make
 
-echo "🚚 Otorgando permisos de ejecución"
-chmod +x ./bin/CuraEngine
+echo "🚚 Moviendo ejecutable a /tmp para uso en la app..."
+cp CuraEngine /tmp/CuraEngine
+chmod +x /tmp/CuraEngine
 
-echo "✅ CuraEngine listo para usar desde ./bin/CuraEngine"
+echo "✅ CuraEngine compilado y listo en /tmp/CuraEngine"
