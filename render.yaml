@@ -8,3 +8,5 @@ services:
     envVars:
       - key: FLASK_ENV
         value: production
+      - key: RENDER_PYTHON_BUILD_POETRY
+        value: false
