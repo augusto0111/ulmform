@@ -1,25 +1,17 @@
 #!/bin/bash
 
-echo "🧹 Limpiando residuos anteriores (si existen)..."
-rm -f ./bin/CuraEngine
-
 echo "📦 Instalando dependencias..."
 pip install --upgrade pip
 pip install -r requirements.txt
 pip install gunicorn
 
+echo "🧹 Limpiando residuos anteriores (si existen)..."
+rm -f /tmp/CuraEngine
+
 echo "📥 Descargando CuraEngine precompilado versión 5.4.0..."
-curl -L -o CuraEngine https://github.com/Ultimaker/CuraEngine/releases/download/5.4.0/CuraEngine-linux-x64.AppImage
+curl -L -o /tmp/CuraEngine https://github.com/Ultimaker/CuraEngine/releases/download/5.4.0/CuraEngine-linux-amd64
 
-echo "📦 Desempaquetando AppImage..."
-chmod +x CuraEngine
-./CuraEngine --appimage-extract > /dev/null
+echo "🚚 Otorgando permisos de ejecución"
+chmod +x /tmp/CuraEngine
 
-echo "🚚 Moviendo binario CuraEngine extraído..."
-mkdir -p ./bin
-mv squashfs-root/usr/bin/CuraEngine ./bin/CuraEngine
-
-echo "🔧 Otorgando permisos de ejecución a ./bin/CuraEngine"
-chmod +x ./bin/CuraEngine
-
-echo "✅ CuraEngine listo para usar desde ./bin"
+echo "✅ CuraEngine listo para usar desde /tmp"
